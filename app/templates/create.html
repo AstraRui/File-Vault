@@ -1,0 +1,637 @@
+{% extends "base.html" %}
+
+{% block title %}Создать секрет — File Vault{% endblock %}
+
+{% block content %}
+
+<section class="create-page">
+
+    <div class="container create-page__container">
+
+        <div class="create-page__heading">
+
+            <a href="/" class="back-link">
+                <span aria-hidden="true">←</span>
+                На главную
+            </a>
+
+            <div class="eyebrow">
+                Новая передача
+            </div>
+
+            <h1>
+                Создать защищённую ссылку
+            </h1>
+
+            <p>
+                Загрузите файл или добавьте текст.
+                После создания вы получите временную ссылку
+                для передачи данных.
+            </p>
+
+        </div>
+
+
+        <div class="create-layout">
+
+            <div class="create-card">
+
+                <div class="create-card__header">
+
+                    <div>
+                        <h2>
+                            Что передаём?
+                        </h2>
+
+                        <p>
+                            Выберите тип содержимого
+                        </p>
+                    </div>
+
+                    <span class="create-card__step">
+                        01
+                    </span>
+
+                </div>
+
+
+                <div class="tabs tabs--large">
+
+                    <button
+                        type="button"
+                        class="tab tab--active"
+                        data-tab="file"
+                    >
+                        <span class="tab__icon" aria-hidden="true">
+                            <svg
+                                width="19"
+                                height="19"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+                                <path
+                                    d="M14 2V8H20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+                            </svg>
+                        </span>
+
+                        Файл
+                    </button>
+
+                    <button
+                        type="button"
+                        class="tab"
+                        data-tab="text"
+                    >
+                        <span class="tab__icon" aria-hidden="true">
+                            <svg
+                                width="19"
+                                height="19"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M5 4H19"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+                                <path
+                                    d="M5 10H19"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+                                <path
+                                    d="M5 16H14"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+                        </span>
+
+                        Текст
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="create-upload"
+                    id="file-upload"
+                    data-upload-zone
+                >
+
+                    <input
+                        type="file"
+                        id="file-input"
+                        hidden
+                    >
+
+                    <div class="create-upload__icon">
+                        <svg
+                            width="28"
+                            height="28"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M12 16V4"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                            <path
+                                d="M7 9L12 4L17 9"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M5 20H19"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </div>
+
+                    <h3>
+                        Перетащите файл сюда
+                    </h3>
+
+                    <p>
+                        или
+                        <button
+                            type="button"
+                            class="upload__link"
+                            id="select-file"
+                        >
+                            выберите его на устройстве
+                        </button>
+                    </p>
+
+                    <span>
+                        Максимальный размер — 100 МБ
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="text-upload text-upload--large"
+                    id="text-upload"
+                    hidden
+                >
+
+                    <textarea
+                        id="secret-text"
+                        class="text-upload__field"
+                        placeholder="Введите секретный текст..."
+                        maxlength="10000"
+                    ></textarea>
+
+                    <div class="text-upload__footer">
+                        <span>
+                            Пароли, токены, заметки и другой текст
+                        </span>
+
+                        <span id="text-counter">
+                            0 / 10 000
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="selected-file selected-file--large"
+                    id="selected-file"
+                    hidden
+                >
+
+                    <div class="selected-file__info">
+
+                        <div class="selected-file__icon">
+                            <svg
+                                width="21"
+                                height="21"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linejoin="round"
+                                />
+                                <path
+                                    d="M14 2V8H20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                />
+                            </svg>
+                        </div>
+
+                        <div class="selected-file__details">
+                            <span
+                                class="selected-file__name"
+                                id="file-name"
+                            >
+                                Файл
+                            </span>
+
+                            <span
+                                class="selected-file__size"
+                                id="file-size"
+                            >
+                                0 Б
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="selected-file__remove"
+                        id="remove-file"
+                        aria-label="Удалить файл"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div class="create-card__header create-card__header--settings">
+
+                    <div>
+                        <h2>
+                            Настройки доступа
+                        </h2>
+
+                        <p>
+                            Определите, сколько времени и раз данные будут доступны
+                        </p>
+                    </div>
+
+                    <span class="create-card__step">
+                        02
+                    </span>
+
+                </div>
+
+
+                <div class="settings settings--large">
+
+                    <div class="setting">
+
+                        <label
+                            class="setting__label"
+                            for="expiration"
+                        >
+                            Срок действия
+                        </label>
+
+                        <select
+                            class="setting__select"
+                            id="expiration"
+                        >
+                            <option value="10m">
+                                10 минут
+                            </option>
+
+                            <option
+                                value="1h"
+                                selected
+                            >
+                                1 час
+                            </option>
+
+                            <option value="24h">
+                                24 часа
+                            </option>
+
+                            <option value="7d">
+                                7 дней
+                            </option>
+                        </select>
+
+                        <span class="setting__hint">
+                            После истечения срока файл будет удалён.
+                        </span>
+
+                    </div>
+
+
+                    <div class="setting">
+
+                        <label
+                            class="setting__label"
+                            for="downloads"
+                        >
+                            Лимит скачиваний
+                        </label>
+
+                        <select
+                            class="setting__select"
+                            id="downloads"
+                        >
+                            <option
+                                value="1"
+                                selected
+                            >
+                                1 скачивание
+                            </option>
+
+                            <option value="3">
+                                3 скачивания
+                            </option>
+
+                            <option value="5">
+                                5 скачиваний
+                            </option>
+
+                            <option value="10">
+                                10 скачиваний
+                            </option>
+                        </select>
+
+                        <span class="setting__hint">
+                            После достижения лимита ссылка перестанет работать.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="create-card__header create-card__header--settings">
+
+                    <div>
+                        <h2>
+                            Создание
+                        </h2>
+
+                        <p>
+                            Проверьте параметры перед отправкой
+                        </p>
+                    </div>
+
+                    <span class="create-card__step">
+                        03
+                    </span>
+
+                </div>
+
+
+                <div class="create-summary">
+
+                    <div class="create-summary__row">
+
+                        <span>
+                            Содержимое
+                        </span>
+
+                        <strong id="summary-type">
+                            Файл
+                        </strong>
+
+                    </div>
+
+                    <div class="create-summary__row">
+
+                        <span>
+                            Срок действия
+                        </span>
+
+                        <strong id="summary-expiration">
+                            1 час
+                        </strong>
+
+                    </div>
+
+                    <div class="create-summary__row">
+
+                        <span>
+                            Скачиваний
+                        </span>
+
+                        <strong id="summary-downloads">
+                            1
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="create-notice">
+
+                    <div class="create-notice__icon">
+                        <svg
+                            width="19"
+                            height="19"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="9"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                            />
+                            <path
+                                d="M12 11V16"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                            <circle
+                                cx="12"
+                                cy="7.5"
+                                r="1"
+                                fill="currentColor"
+                            />
+                        </svg>
+                    </div>
+
+                    <p>
+                        После создания ссылка будет единственным способом
+                        получить содержимое. Сохраните её перед закрытием страницы.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="create-button create-button--large"
+                    id="create-secret"
+                >
+                    <span class="create-button__text">
+                        Создать защищённую ссылку
+                    </span>
+
+                    <span
+                        class="create-button__loading"
+                        hidden
+                    >
+                        Создание...
+                    </span>
+
+                    <span
+                        class="create-button__arrow"
+                        aria-hidden="true"
+                    >
+                        →
+                    </span>
+                </button>
+
+
+                <div class="create-card__secure">
+
+                    <span class="create-card__secure-icon">
+                        <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <rect
+                                x="4"
+                                y="10"
+                                width="16"
+                                height="11"
+                                rx="2"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                            />
+                            <path
+                                d="M8 10V7C8 4.8 9.8 3 12 3C14.2 3 16 4.8 16 7V10"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </span>
+
+                    Данные шифруются перед сохранением
+
+                </div>
+
+            </div>
+
+
+            <aside class="create-info">
+
+                <div class="create-info__block">
+
+                    <span class="create-info__label">
+                        FILE VAULT
+                    </span>
+
+                    <h2>
+                        Передавайте то,
+                        что не хочется
+                        оставлять навсегда.
+                    </h2>
+
+                    <p>
+                        File Vault хранит только то, что необходимо
+                        для передачи. Вы сами определяете срок жизни
+                        и количество доступов.
+                    </p>
+
+                </div>
+
+
+                <div class="create-info__divider"></div>
+
+
+                <div class="create-info__block">
+
+                    <h3>
+                        Что произойдёт после создания?
+                    </h3>
+
+                    <ul class="create-info__list">
+
+                        <li>
+                            <span>01</span>
+                            <p>
+                                Файл будет зашифрован и сохранён
+                                в защищённом хранилище.
+                            </p>
+                        </li>
+
+                        <li>
+                            <span>02</span>
+                            <p>
+                                Система создаст уникальную
+                                временную ссылку.
+                            </p>
+                        </li>
+
+                        <li>
+                            <span>03</span>
+                            <p>
+                                После окончания срока или лимита
+                                данные будут удалены.
+                            </p>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="create-info__tip">
+
+                    <span class="create-info__tip-icon">
+                        ✓
+                    </span>
+
+                    <div>
+                        <strong>
+                            Регистрация не нужна
+                        </strong>
+
+                        <p>
+                            Никаких аккаунтов и привязки
+                            к электронной почте.
+                        </p>
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}File Vault{% endblock %}</title>
+
+    <meta
+        name="description"
+        content="File Vault — безопасная передача файлов и текста по временной ссылке."
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='css/style.css') }}"
+    >
+
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container header__inner">
+
+        <a href="/" class="logo" aria-label="File Vault">
+            <span class="logo__mark">V</span>
+            <span class="logo__text">File Vault</span>
+        </a>
+
+        <nav class="nav">
+            <a href="/#how-it-works" class="nav__link">
+                Как это работает
+            </a>
+
+            <a href="/#security" class="nav__link">
+                Безопасность
+            </a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="main">
+    {% block content %}{% endblock %}
+</main>
+
+
+<footer class="footer">
+    <div class="container footer__inner">
+
+        <div class="footer__brand">
+            <div class="logo">
+                <span class="logo__mark">V</span>
+                <span class="logo__text">File Vault</span>
+            </div>
+
+            <p class="footer__description">
+                Временная и безопасная передача файлов
+                без регистрации.
+            </p>
+        </div>
+
+        <div class="footer__links">
+            <a href="/#how-it-works">Как это работает</a>
+            <a href="/#security">Безопасность</a>
+        </div>
+
+        <div class="footer__copyright">
+            © 2026 File Vault
+        </div>
+
+    </div>
+</footer>
+
+
+<script
+    src="{{ url_for('static', path='js/app.js') }}"
+    defer>
+</script>
+
+{% block scripts %}{% endblock %}
+
+</body>
+</html>
